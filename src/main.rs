@@ -18,6 +18,7 @@ fn update(state: &mut BrowserState, message: Message) {
         },
         Message::NewTab => {
             state.tabs.push(Tab {
+                label: String::from("New Tab"),
                 address: String::new(),
                 content: String::from("new tab content"),
             });
@@ -27,11 +28,14 @@ fn update(state: &mut BrowserState, message: Message) {
 }
 
 fn view(state: &BrowserState) -> Element<Message> {
-    let tabs = state.tabs.iter().enumerate().map(|(i, tab)| {
-        button(text(&tab.address))
+    let mut tabs_row = Row::new();
+    
+    for (i, tab) in state.tabs.iter().enumerate() {
+        let tab_button: Element<Message> = Button::<Message, Theme, Renderer>::new(Text::new(&tab.label))
             .on_press(Message::TabChanged(i))
-            .into()
-    });
+            .into();
+        tabs_row = tabs_row.push(tab_button);
+    }
 
     let new_tab_button: Element<Message> = Button::<Message, Theme, Renderer>::new(Text::new("+"))
         .on_press(Message::NewTab)
@@ -45,7 +49,7 @@ fn view(state: &BrowserState) -> Element<Message> {
     let content = Text::new(&state.tabs[state.active_tab].content);
 
     Column::new()
-        .push(Row::new().push(Column::with_children(tabs.collect::<Vec<_>>())).push(new_tab_button))
+        .push(Row::new().push(tabs_row).push(new_tab_button)) 
         .push(address_input)
         .push(content)
         .into()
@@ -59,6 +63,7 @@ struct BrowserState {
 impl Default for BrowserState {
     fn default() -> Self {
         let default_tab = Tab {
+            label: String::from("New Tab"),
             address: String::from("https://example.com"),
             content: String::from("Hello, world!"),
         };
@@ -70,6 +75,7 @@ impl Default for BrowserState {
 }
 
 struct Tab {
+    label: String,
     address: String,
     content: String,
 }
