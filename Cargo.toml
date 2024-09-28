@@ -1,0 +1,7 @@
+[package]
+name = "cartan"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+skia-safe = "0.78.0"
