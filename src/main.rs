@@ -26,7 +26,7 @@ fn update(state: &mut BrowserState, message: Message) {
         Message::NewTab => {
             state.tabs.push(Tab {
                 label: String::from("New Tab"),
-                address: String::new(),
+                address: String::from("eqwieqojw"),
                 content: String::from("new tab content"),
             });
             state.active_tab = state.tabs.len() - 1;

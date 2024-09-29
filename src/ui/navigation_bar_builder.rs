@@ -1,4 +1,4 @@
-use iced::{widget::{container, Container, Row, TextInput}, Background, Color, Element, Length, Renderer, Theme};
+use iced::{border::Radius, widget::{container, text_input, Container, Row, TextInput}, Background, Border, Color, Element, Length, Renderer, Theme};
 
 use super::{elements::icon_button, types::{BrowserState, Message, UIConfig}};
 
@@ -15,6 +15,25 @@ pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
         &state.tabs[state.active_tab].address,
     )
         .line_height(32.0)
+        .style(|_theme, _status| {
+            text_input::Style { 
+                background: Background::Color(Color::WHITE),
+                value: Color::BLACK, 
+                border: Border {
+                    color: Color::BLACK,
+                    width: 0.5,
+                    radius: Radius {
+                        top_left: 0.0,
+                        top_right: 0.0,
+                        bottom_left: 0.0,
+                        bottom_right: 0.0,
+                    }
+                },
+                icon: Color::WHITE,
+                placeholder: Color::from_rgb8(128, 128, 128),
+                selection: Color::BLACK,
+            }
+        })
         .on_input(Message::AddressInputChanged)
         .on_submit(Message::AddressChanged(state.tabs[state.active_tab].address.clone()))
         .into();
