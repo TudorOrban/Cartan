@@ -12,9 +12,8 @@ pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
 
     let address_input: Element<Message> = TextInput::<Message, Theme, Renderer>::new(
         "Enter URL...",
-        &state.tabs[state.active_tab].address,
+        "DIAJOIQWJEOIQJOI",
     )
-        .line_height(32.0)
         .style(|_theme, _status| {
             text_input::Style { 
                 background: Background::Color(Color::WHITE),
@@ -31,7 +30,7 @@ pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
                 },
                 icon: Color::WHITE,
                 placeholder: Color::from_rgb8(128, 128, 128),
-                selection: Color::BLACK,
+                selection: Color::TRANSPARENT,
             }
         })
         .on_input(Message::AddressInputChanged)
@@ -48,7 +47,7 @@ pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
         .push(address_input)
         .push(downloads_button)
         .push(application_menu_button)
-        .height(40.0);
+        .height(32.0);
 
     // Add border with a visual trick
     Container::new(navigation_bar)
@@ -59,6 +58,7 @@ pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
             background: Some(Background::Color(Color::from_rgb8(config.header_color.0, config.header_color.1, config.header_color.2))),
             ..Default::default()
         })
+        .height(32.0)
         .into()
 }
 
