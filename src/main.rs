@@ -1,4 +1,5 @@
 pub mod ui;
+pub mod handlers;
 
 use iced::{widget::{Column, Text}, Element};
 
@@ -9,35 +10,7 @@ pub fn main() -> iced::Result {
 }
 
 fn update(state: &mut BrowserState, message: Message) {
-    match message {
-        Message::TabChanged(index) => {
-            state.active_tab = index;
-        },
-        Message::AddressChanged(address) => {
-            if let Some(tab) = state.tabs.get_mut(state.active_tab) {
-                tab.address = address;
-            }
-        },
-        Message::AddressInputChanged(address) => {
-            if let Some(tab) = state.tabs.get_mut(state.active_tab) {
-                tab.address = address;
-            }
-        },
-        Message::NewTab => {
-            state.tabs.push(Tab {
-                label: String::from("New Tab"),
-                address: String::from(""),
-                content: String::from("new tab content"),
-            });
-            state.active_tab = state.tabs.len() - 1;
-        },
-        Message::CloseTab(index) => {
-            state.tabs.remove(index);
-            if state.active_tab >= state.tabs.len() {
-                state.active_tab = state.tabs.len() - 1;
-            }
-        },
-    }
+    handlers::handle_message(state, message);
 }
 
 fn view(state: &BrowserState) -> Element<Message> {

@@ -6,13 +6,13 @@ use super::{elements::icon_button, types::{BrowserState, Message, UIConfig}};
 pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
     let config = UIConfig::default();
 
-    let back_button: Element<Message> = icon_button::icon_button("resources/images/arrow-left-solid.png", "", Message::NewTab, Some(40.0), Some(40.0), Some(20.0)).into();
-    let forward_button: Element<Message> = icon_button::icon_button("resources/images/arrow-right-solid.png", "", Message::NewTab, Some(40.0), Some(40.0), Some(20.0)).into();
+    let back_button: Element<Message> = icon_button::icon_button("resources/images/arrow-left-solid.png", "", Message::GoBack, Some(40.0), Some(40.0), Some(20.0)).into();
+    let forward_button: Element<Message> = icon_button::icon_button("resources/images/arrow-right-solid.png", "", Message::GoForward, Some(40.0), Some(40.0), Some(20.0)).into();
     let reload_button: Element<Message> = icon_button::icon_button("resources/images/rotate-right-solid.png", "", Message::NewTab, Some(40.0), Some(40.0), Some(20.0)).into();
 
     let address_input: Element<Message> = TextInput::<Message, Theme, Renderer>::new(
         "Enter URL...",
-        "DIAJOIQWJEOIQJOI",
+        &state.tabs[state.active_tab].address,
     )
         .style(|_theme, _status| {
             text_input::Style { 

@@ -10,6 +10,7 @@ impl Default for BrowserState {
             label: String::from("New Tab"),
             address: String::from("https://example.com"),
             content: String::from("Hello, world!"),
+            history: vec![String::from("https://example.com")],
         };
         BrowserState {
             tabs: vec![default_tab],
@@ -22,6 +23,7 @@ pub struct Tab {
     pub label: String,
     pub address: String,
     pub content: String,
+    pub history: Vec<String>,
 }
 
 #[derive(Debug, Clone)]
@@ -31,6 +33,8 @@ pub enum Message {
     AddressInputChanged(String),
     NewTab,
     CloseTab(usize),
+    GoBack,
+    GoForward,
 }
 
 #[derive(Debug, Clone, Copy)]
