@@ -30,4 +30,5 @@ pub enum Message {
     AddressChanged(String),
     AddressInputChanged(String),
     NewTab,
+    CloseTab(usize),
 }

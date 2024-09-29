@@ -31,6 +31,12 @@ fn update(state: &mut BrowserState, message: Message) {
             });
             state.active_tab = state.tabs.len() - 1;
         },
+        Message::CloseTab(index) => {
+            state.tabs.remove(index);
+            if state.active_tab >= state.tabs.len() {
+                state.active_tab = state.tabs.len() - 1;
+            }
+        },
     }
 }
 
