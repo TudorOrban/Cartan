@@ -11,8 +11,9 @@ pub fn icon_button<'a>(
     message: Message,
     width: Option<f32>,
     height: Option<f32>,
+    icon_height: Option<f32>,
 ) -> Button<'a, Message> {
-    let icon_height = height.unwrap_or(40.0) - 15.0;
+    let icon_height = icon_height.unwrap_or(height.unwrap_or(40.0) - 15.0);
     let icon = Image::new(icon_path)
         .width(Length::Fixed(icon_height))
         .height(Length::Fixed(icon_height));
