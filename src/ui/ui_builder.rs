@@ -1,6 +1,6 @@
 use iced::{widget::{Button, Row, Text, TextInput}, Element, Renderer, Theme};
 
-use super::types::{BrowserState, Message};
+use super::{elements::icon_button, types::{BrowserState, Message}};
 
 
 pub fn build_upper_header(state: &BrowserState) -> Row<'_, Message> {
@@ -28,6 +28,8 @@ pub fn build_navigation_bar(state: &BrowserState) -> Row<'_, Message> {
     let reload_button: Element<Message> = Button::<Message, Theme, Renderer>::new(Text::new("Reload"))
         .into();
 
+    let test_icon_button = icon_button::icon_button("resources/images/arrow-left-solid.png", "", Message::NewTab, Some(50.0), Some(50.0));
+
     let address_input: Element<Message> = TextInput::<Message, Theme, Renderer>::new(
         "Enter URL...",
         &state.tabs[state.active_tab].address,
@@ -45,7 +47,9 @@ pub fn build_navigation_bar(state: &BrowserState) -> Row<'_, Message> {
         .push(back_button)
         .push(forward_button)
         .push(reload_button)
+        .push(test_icon_button)
         .push(address_input)
         .push(downloads_button)
         .push(application_menu_button)
+        .height(200)
 }

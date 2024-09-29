@@ -4,5 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-iced = "0.13.0"
+iced = { version = "0.13.0", features = ["image"] }
 skia-safe = "0.78.0"
+
