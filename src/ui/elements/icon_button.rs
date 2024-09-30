@@ -12,8 +12,9 @@ pub fn icon_button<'a>(
     width: Option<f32>,
     height: Option<f32>,
     icon_height: Option<f32>,
+    disabled: bool,
 ) -> Button<'a, Message> {
-    let icon_height = icon_height.unwrap_or(height.unwrap_or(40.0) - 15.0);
+    let icon_height = icon_height.unwrap_or(height.unwrap_or(40.0) - 20.0);
     let icon = Image::new(icon_path)
         .width(Length::Fixed(icon_height))
         .height(Length::Fixed(icon_height));
@@ -24,9 +25,14 @@ pub fn icon_button<'a>(
     let button_width = width.unwrap_or(40.0);
     let button_height = height.unwrap_or(40.0);
     
-    Button::new(content)
-        .on_press(message)
+    let mut button = Button::new(content)
         .width(Length::Fixed(button_width)) 
         .height(Length::Fixed(button_height))
-        .style(|_theme, status| styles::style_header_button(status))
+        .style(move |_theme, status| styles::style_header_button(status, disabled));
+
+    if !disabled {
+        button = button.on_press(message);
+    }
+
+    button
 }

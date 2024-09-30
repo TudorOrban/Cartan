@@ -2,19 +2,16 @@
 pub struct BrowserState {
     pub tabs: Vec<Tab>,
     pub active_tab: usize,
+    pub ui_config: UIConfig,
 }
 
 impl Default for BrowserState {
     fn default() -> Self {
-        let default_tab = Tab {
-            label: String::from("New Tab"),
-            address: String::from("https://example.com"),
-            content: String::from("Hello, world!"),
-            history: vec![String::from("https://example.com")],
-        };
+        let default_tab = Tab::default();
         BrowserState {
             tabs: vec![default_tab],
             active_tab: 0,
+            ui_config: UIConfig::default(),
         }
     }
 }
@@ -23,7 +20,26 @@ pub struct Tab {
     pub label: String,
     pub address: String,
     pub content: String,
+    pub tab_history: TabHistory,
+}
+
+pub struct TabHistory {
     pub history: Vec<String>,
+    pub forward_stack: Vec<String>,
+}
+
+impl Default for Tab {
+    fn default() -> Self {
+        Tab {
+            label: String::from("New Tab"),
+            address: String::from(""),
+            content: String::from(""),
+            tab_history: TabHistory {
+                history: vec![String::from("")],
+                forward_stack: vec![],
+            },
+        }
+    }
 }
 
 #[derive(Debug, Clone)]

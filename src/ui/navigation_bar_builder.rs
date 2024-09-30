@@ -1,14 +1,16 @@
 use iced::{border::Radius, widget::{container, text_input, Container, Row, TextInput}, Background, Border, Color, Element, Length, Renderer, Theme};
 
-use super::{elements::icon_button, types::{BrowserState, Message, UIConfig}};
+use super::{elements::icon_button, types::{BrowserState, Message}};
 
 
 pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
-    let config = UIConfig::default();
+    let tab = &state.tabs[state.active_tab];
+    let back_disabled = tab.tab_history.history.len() <= 1;
+    let forward_disabled = tab.tab_history.forward_stack.is_empty();
 
-    let back_button: Element<Message> = icon_button::icon_button("resources/images/arrow-left-solid.png", "", Message::GoBack, Some(40.0), Some(40.0), Some(20.0)).into();
-    let forward_button: Element<Message> = icon_button::icon_button("resources/images/arrow-right-solid.png", "", Message::GoForward, Some(40.0), Some(40.0), Some(20.0)).into();
-    let reload_button: Element<Message> = icon_button::icon_button("resources/images/rotate-right-solid.png", "", Message::NewTab, Some(40.0), Some(40.0), Some(20.0)).into();
+    let back_button: Element<Message> = icon_button::icon_button("resources/images/arrow-left-solid.png", "", Message::GoBack, Some(40.0), Some(40.0), Some(20.0), back_disabled).into();
+    let forward_button: Element<Message> = icon_button::icon_button("resources/images/arrow-right-solid.png", "", Message::GoForward, Some(40.0), Some(40.0), Some(20.0), forward_disabled).into();
+    let reload_button: Element<Message> = icon_button::icon_button("resources/images/rotate-right-solid.png", "", Message::NewTab, Some(40.0), Some(40.0), Some(20.0), false).into();
 
     let address_input: Element<Message> = TextInput::<Message, Theme, Renderer>::new(
         "Enter URL...",
@@ -37,8 +39,8 @@ pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
         .on_submit(Message::AddressChanged(state.tabs[state.active_tab].address.clone()))
         .into();
 
-    let downloads_button: Element<Message> = icon_button::icon_button("resources/images/download-solid.png", "", Message::NewTab, Some(40.0), Some(40.0), Some(20.0)).into();
-    let application_menu_button: Element<Message> = icon_button::icon_button("resources/images/bars-solid.png", "", Message::NewTab, Some(40.0), Some(40.0), Some(20.0)).into();
+    let downloads_button: Element<Message> = icon_button::icon_button("resources/images/download-solid.png", "", Message::NewTab, Some(40.0), Some(40.0), Some(20.0), false).into();
+    let application_menu_button: Element<Message> = icon_button::icon_button("resources/images/bars-solid.png", "", Message::NewTab, Some(40.0), Some(40.0), Some(20.0), false).into();
 
     let navigation_bar = Row::new()
         .push(back_button)
@@ -55,7 +57,7 @@ pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
         .height(Length::Fixed(41.0))
         .padding(0.5)
         .style(move |_| container::Style {
-            background: Some(Background::Color(Color::from_rgb8(config.header_color.0, config.header_color.1, config.header_color.2))),
+            background: Some(Background::Color(Color::from_rgb8(state.ui_config.header_color.0, state.ui_config.header_color.1, state.ui_config.header_color.2))),
             ..Default::default()
         })
         .height(32.0)

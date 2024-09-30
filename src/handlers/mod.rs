@@ -9,17 +9,10 @@ pub fn handle_message(state: &mut BrowserState, message: Message) {
         },
         Message::AddressChanged(address) => {
             if let Some(tab) = state.tabs.get_mut(state.active_tab) {
-                println!("Address changed to: {}", address);
                 let address_clone = address.clone();
                 tab.address = address;
 
-                if let Some(last) = tab.history.last() {
-                    if last != &address_clone {
-                        tab.history.push(address_clone);
-                    }
-                } else {
-                    tab.history.push(address_clone);
-                }
+                navigation_handlers::handle_address_change(tab, address_clone);
             }
         },
         Message::AddressInputChanged(address) => {
@@ -28,12 +21,7 @@ pub fn handle_message(state: &mut BrowserState, message: Message) {
             }
         },
         Message::NewTab => {
-            state.tabs.push(Tab {
-                label: String::from("New Tab"),
-                address: String::from(""),
-                content: String::from("new tab content"),
-                history: vec![String::from("")],
-            });
+            state.tabs.push(Tab::default());
             state.active_tab = state.tabs.len() - 1;
         },
         Message::CloseTab(index) => {

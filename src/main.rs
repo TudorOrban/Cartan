@@ -3,7 +3,7 @@ pub mod handlers;
 
 use iced::{widget::{Column, Text}, Element};
 
-use ui::{navigation_bar_builder, types::{BrowserState, Message, Tab}, upper_header_builder};
+use ui::{navigation_bar_builder, types::{BrowserState, Message}, upper_header_builder};
 
 pub fn main() -> iced::Result {
     iced::run("Cartan", update, view)

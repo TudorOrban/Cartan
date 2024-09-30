@@ -1,11 +1,9 @@
 use iced::{alignment, border::Radius, widget::{button, container, Button, Container, Row, Text}, Background, Border, Color, Element, Length, Renderer, Theme};
 
-use super::{elements::{icon_button, styles}, types::{BrowserState, Message, Tab, UIConfig}};
+use super::{elements::{icon_button, styles}, types::{BrowserState, Message, Tab}};
 
 
 pub fn build_upper_header(state: &BrowserState) -> Container<'_, Message> {
-    let config = UIConfig::default();
-
     let mut upper_header = Row::new();
 
     for (i, tab) in state.tabs.iter().enumerate() {
@@ -14,23 +12,23 @@ pub fn build_upper_header(state: &BrowserState) -> Container<'_, Message> {
     }
 
     let new_tab_button: Element<Message> = Button::new(Text::new("+"))
-        .style(|_theme, status| styles::style_header_button(status))
+        .style(|_theme, status| styles::style_header_button(status, false))
         .on_press(Message::NewTab)
         .into();
 
     let complete_header = Row::new()
         .push(upper_header)
         .push(new_tab_button)
-        .height(Length::Fixed(config.upper_header_height))
+        .height(Length::Fixed(state.ui_config.upper_header_height))
         .align_y(alignment::Vertical::Bottom);
         
     Container::new(complete_header)
         .width(Length::Fill)
         .style(move |_| container::Style {
-            background: Some(Background::Color(Color::from_rgb8(config.header_color.0, config.header_color.1, config.header_color.2))),
+            background: Some(Background::Color(Color::from_rgb8(state.ui_config.header_color.0, state.ui_config.header_color.1, state.ui_config.header_color.2))),
             ..Default::default()
         })
-        .height(Length::Fixed(config.upper_header_height))
+        .height(Length::Fixed(state.ui_config.upper_header_height))
         .into()
 }
 
@@ -44,14 +42,14 @@ fn build_tab_container<'a>(state: &'a BrowserState, i: usize, tab: &'a Tab) -> C
                     ..button::Style::default()
                 } 
             } else {
-                styles::style_header_button(status)
+                styles::style_header_button(status, false)
             }
         })
         .on_press(Message::TabChanged(i))
         .into();
 
-    let close_tab_button: Element<Message> = icon_button::icon_button("resources/images/xmark-solid.png", "", Message::CloseTab(i), Some(32.0), Some(32.0), Some(16.0))
-        .style(|_theme, status| styles::style_header_button(status))
+    let close_tab_button: Element<Message> = icon_button::icon_button("resources/images/xmark-solid.png", "", Message::CloseTab(i), Some(32.0), Some(32.0), Some(16.0), false)
+        .style(|_theme, status| styles::style_header_button(status, false))
         .into();
 
     let tab_row = Row::new()
