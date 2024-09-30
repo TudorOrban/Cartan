@@ -1,4 +1,4 @@
-use iced::{border::Radius, widget::{container, text_input, Container, Row, TextInput}, Background, Border, Color, Element, Length, Renderer, Theme};
+use iced::{alignment, border::Radius, widget::{container, text_input, Container, Row, TextInput}, Background, Border, Color, Element, Length, Renderer, Theme};
 
 use super::{elements::icon_button, types::{BrowserState, Message}};
 
@@ -49,7 +49,8 @@ pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
         .push(address_input)
         .push(downloads_button)
         .push(application_menu_button)
-        .height(32.0);
+        .align_y(alignment::Vertical::Center)
+        .height(40.0);
 
     // Add border with a visual trick
     Container::new(navigation_bar)
@@ -60,7 +61,7 @@ pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
             background: Some(Background::Color(Color::from_rgb8(state.ui_config.header_color.0, state.ui_config.header_color.1, state.ui_config.header_color.2))),
             ..Default::default()
         })
-        .height(32.0)
+        .height(40.0)
         .into()
 }
 

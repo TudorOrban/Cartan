@@ -30,7 +30,7 @@ pub fn icon_button<'a>(
     let button_width = width.unwrap_or(40.0);
     let button_height = height.unwrap_or(40.0);
     
-    let padding = (button_height - icon_height) / 2.5;
+    let padding = (button_height - icon_height) / 2.0;
 
     let mut button = Button::new(content)
         .width(Length::Fixed(button_width)) 
