@@ -1,5 +1,6 @@
 pub mod ui;
 pub mod handlers;
+pub mod renderer;
 
 use iced::{widget::{Column, Text}, Element, Task};
 

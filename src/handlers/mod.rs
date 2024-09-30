@@ -1,6 +1,6 @@
 use iced::Task;
 
-use crate::ui::types::{BrowserState, Message, Tab};
+use crate::{renderer::html_parser::{self, traverse}, ui::types::{BrowserState, Message, Tab}};
 
 pub mod navigation_handlers;
 pub mod fetch_url;
@@ -21,9 +21,13 @@ pub fn handle_message(state: &mut BrowserState, message: Message) -> Task<Messag
             return Task::none();
         },
         Message::ContentFetched(Ok(content)) => {
-            println!("Content fetched: {}", content);
             if let Some(tab) = state.tabs.get_mut(state.active_tab) {
-                tab.content = content;
+                let parsed_dom = html_parser::parse_html_content(&content);
+
+                tab.parsed_dom = Some(parsed_dom);
+                
+                // Use as_ref() to avoid cloning the big parsed_dom
+                traverse(tab.parsed_dom.as_ref().unwrap());
             }
             return Task::none();
         },

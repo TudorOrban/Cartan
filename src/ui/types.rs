@@ -1,3 +1,5 @@
+use kuchiki::NodeRef;
+
 
 pub struct BrowserState {
     pub tabs: Vec<Tab>,
@@ -21,6 +23,7 @@ pub struct Tab {
     pub address: String,
     pub search_query: String,
     pub content: String,
+    pub parsed_dom: Option<NodeRef>,
     pub tab_history: TabHistory,
 }
 
@@ -36,6 +39,7 @@ impl Default for Tab {
             address: String::from(""),
             search_query: String::from(""),
             content: String::from(""),
+            parsed_dom: None,
             tab_history: TabHistory {
                 history: vec![String::from("")],
                 forward_stack: vec![],
