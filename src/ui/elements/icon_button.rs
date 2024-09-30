@@ -1,4 +1,4 @@
-use iced::{widget::{Button, Image, Row, Text}, Length};
+use iced::{alignment, widget::{Button, Image, Row, Space, Text}, Length};
 
 use crate::ui::types::Message;
 
@@ -20,14 +20,22 @@ pub fn icon_button<'a>(
         .height(Length::Fixed(icon_height));
     
     let label = Text::new(text);
-    let content = Row::new().push(icon).push(label);
+    let content = Row::new()
+        .push(Space::with_width(Length::Fill))
+        .push(icon)
+        .push(label)
+        .push(Space::with_width(Length::Fill))
+        .align_y(alignment::Vertical::Center);
 
     let button_width = width.unwrap_or(40.0);
     let button_height = height.unwrap_or(40.0);
     
+    let padding = (button_height - icon_height) / 2.5;
+
     let mut button = Button::new(content)
         .width(Length::Fixed(button_width)) 
         .height(Length::Fixed(button_height))
+        .padding(padding)
         .style(move |_theme, status| styles::style_header_button(status, disabled));
 
     if !disabled {

@@ -8,9 +8,9 @@ pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
     let back_disabled = tab.tab_history.history.len() <= 1;
     let forward_disabled = tab.tab_history.forward_stack.is_empty();
 
-    let back_button: Element<Message> = icon_button::icon_button("resources/images/arrow-left-solid.png", "", Message::GoBack, Some(40.0), Some(40.0), Some(20.0), back_disabled).into();
-    let forward_button: Element<Message> = icon_button::icon_button("resources/images/arrow-right-solid.png", "", Message::GoForward, Some(40.0), Some(40.0), Some(20.0), forward_disabled).into();
-    let reload_button: Element<Message> = icon_button::icon_button("resources/images/rotate-right-solid.png", "", Message::NewTab, Some(40.0), Some(40.0), Some(20.0), false).into();
+    let back_button: Element<Message> = icon_button::icon_button("resources/images/arrow-left-solid.png", "", Message::GoBack, Some(48.0), Some(48.0), Some(30.0), back_disabled).into();
+    let forward_button: Element<Message> = icon_button::icon_button("resources/images/arrow-right-solid.png", "", Message::GoForward, Some(48.0), Some(48.0), Some(30.0), forward_disabled).into();
+    let reload_button: Element<Message> = icon_button::icon_button("resources/images/rotate-right-solid.png", "", Message::NewTab, Some(48.0), Some(48.0), Some(30.0), false).into();
 
     let address_input: Element<Message> = TextInput::<Message, Theme, Renderer>::new(
         "Enter URL...",
@@ -24,10 +24,10 @@ pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
                     color: Color::BLACK,
                     width: 0.5,
                     radius: Radius {
-                        top_left: 0.0,
-                        top_right: 0.0,
-                        bottom_left: 0.0,
-                        bottom_right: 0.0,
+                        top_left: 4.0,
+                        top_right: 4.0,
+                        bottom_left: 4.0,
+                        bottom_right: 4.0,
                     }
                 },
                 icon: Color::WHITE,
@@ -39,8 +39,8 @@ pub fn build_navigation_bar(state: &BrowserState) -> Container<'_, Message> {
         .on_submit(Message::AddressChanged(state.tabs[state.active_tab].address.clone()))
         .into();
 
-    let downloads_button: Element<Message> = icon_button::icon_button("resources/images/download-solid.png", "", Message::NewTab, Some(40.0), Some(40.0), Some(20.0), false).into();
-    let application_menu_button: Element<Message> = icon_button::icon_button("resources/images/bars-solid.png", "", Message::NewTab, Some(40.0), Some(40.0), Some(20.0), false).into();
+    let downloads_button: Element<Message> = icon_button::icon_button("resources/images/download-solid.png", "", Message::NewTab, Some(48.0), Some(48.0), Some(30.0), false).into();
+    let application_menu_button: Element<Message> = icon_button::icon_button("resources/images/bars-solid.png", "", Message::NewTab, Some(48.0), Some(48.0), Some(30.0), false).into();
 
     let navigation_bar = Row::new()
         .push(back_button)

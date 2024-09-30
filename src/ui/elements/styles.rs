@@ -7,8 +7,8 @@ pub fn style_header_button(
 ) -> button::Style {
     if disabled {
         return button::Style {
-            background: Some(iced::Background::Color(Color::from_rgb8(200, 200, 200))),
-            text_color: Color::from_rgb8(0, 80, 160),
+            background: Some(iced::Background::Color(Color::from_rgb8(0, 80, 160))),
+            text_color: Color::WHITE,
             ..button::Style::default()
         }
     }
