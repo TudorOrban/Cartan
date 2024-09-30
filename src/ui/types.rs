@@ -19,6 +19,7 @@ impl Default for BrowserState {
 pub struct Tab {
     pub label: String,
     pub address: String,
+    pub search_query: String,
     pub content: String,
     pub tab_history: TabHistory,
 }
@@ -33,6 +34,7 @@ impl Default for Tab {
         Tab {
             label: String::from("New Tab"),
             address: String::from(""),
+            search_query: String::from(""),
             content: String::from(""),
             tab_history: TabHistory {
                 history: vec![String::from("")],
@@ -47,6 +49,7 @@ pub enum Message {
     TabChanged(usize),
     AddressChanged(String),
     AddressInputChanged(String),
+    ContentFetched(Result<String, String>),
     NewTab,
     CloseTab(usize),
     GoBack,

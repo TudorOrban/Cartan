@@ -1,16 +1,17 @@
 pub mod ui;
 pub mod handlers;
 
-use iced::{widget::{Column, Text}, Element};
+use iced::{widget::{Column, Text}, Element, Task};
 
 use ui::{navigation_bar_builder, types::{BrowserState, Message}, upper_header_builder};
+
 
 pub fn main() -> iced::Result {
     iced::run("Cartan", update, view)
 }
 
-fn update(state: &mut BrowserState, message: Message) {
-    handlers::handle_message(state, message);
+fn update(state: &mut BrowserState, message: Message) -> Task<Message> {
+    handlers::handle_message(state, message)
 }
 
 fn view(state: &BrowserState) -> Element<Message> {
