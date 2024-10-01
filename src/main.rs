@@ -2,8 +2,9 @@ pub mod ui;
 pub mod handlers;
 pub mod renderer;
 
-use iced::{widget::{Column, Text}, Element, Task};
+use iced::{widget::{Canvas, Column}, Element, Length, Task};
 
+use renderer::types::HTMLCanvas;
 use ui::{navigation_bar_builder, types::{BrowserState, Message}, upper_header_builder};
 
 
@@ -20,11 +21,14 @@ fn view(state: &BrowserState) -> Element<Message> {
 
     let navigation_bar = navigation_bar_builder::build_navigation_bar(state);
 
-    let content = Text::new(&state.tabs[state.active_tab].content);
+    let html_canvas = HTMLCanvas::new(state.tabs[state.active_tab].parsed_dom.clone());
+    let canvas = Canvas::new(html_canvas)
+        .width(Length::Fill)
+        .height(Length::Fill);
 
     Column::new()
         .push(upper_header) 
         .push(navigation_bar)
-        .push(content)
+        .push(canvas)
         .into()
 }
