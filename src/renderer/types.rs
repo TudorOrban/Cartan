@@ -41,6 +41,8 @@ impl<Message> Program<Message> for HTMLCanvas {
         _cursor: mouse::Cursor,
     ) -> Vec<Geometry<Renderer>> {
         let geometry = self.cache.draw(renderer, bounds.size(), |frame| {
+            frame.fill_rectangle(Point::new(0.0, 0.0), bounds.size(), iced::Color::WHITE);
+
             if let Some(dom) = &self.dom {
                 self.draw_dom(frame, dom);
             }
